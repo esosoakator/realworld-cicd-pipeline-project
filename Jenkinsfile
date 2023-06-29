@@ -57,10 +57,18 @@ pipeline {
                 withCredentials([string(credentialsId: 'SonarQube-Token', variable: 'SONAR_TOKEN')]) {
                 sh """
                 mvn sonar:sonar \
-                  -Dsonar.projectKey=cicd-project \
-                  -Dsonar.host.url=http://3.88.36.227:9000 \
-                  -Dsonar.login=9625a7de3598e92c6393695fb81619554cd2800f
+                -Dsonar.projectKey=cicd-pipeline-project \
+                -Dsonar.host.url=http://172.31.23.58:9000 \
+                -Dsonar.login=$SONAR_TOKEN
                 """
+                }
+            }
+        }
+    }
+    stage('SonarQube GateKeeper') {
+        steps {
+          timeout(time : 1, unit : 'HOURS'){
+          waitForQualityGate abortPipeline: true
           }
        }
     }
@@ -128,4 +136,3 @@ pipeline {
     }
   }
 }
-
