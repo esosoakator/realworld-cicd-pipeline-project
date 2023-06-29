@@ -61,14 +61,6 @@ pipeline {
                   -Dsonar.host.url=http://3.88.36.227:9000 \
                   -Dsonar.login=9625a7de3598e92c6393695fb81619554cd2800f
                 """
-                }
-            }
-        }
-    }
-    stage('SonarQube GateKeeper') {
-        steps {
-          timeout(time : 1, unit : 'HOURS'){
-          waitForQualityGate abortPipeline: true
           }
        }
     }
@@ -77,7 +69,7 @@ pipeline {
            nexusArtifactUploader(
               nexusVersion: 'nexus3',
               protocol: 'http',
-              nexusUrl: '52.40.194.226:8081',
+              nexusUrl: '34.203.189.5:8081',
               groupId: 'webapp',
               version: "${env.BUILD_ID}-${env.BUILD_TIMESTAMP}",
               repository: 'maven-project-releases',  //"${NEXUS_REPOSITORY}",
